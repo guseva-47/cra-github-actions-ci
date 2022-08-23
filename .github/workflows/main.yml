@@ -20,7 +20,7 @@ jobs:
         run: npm run ts
 
   build:
-    needs: lint
+    # needs: lint
     if: startsWith(github.ref, 'refs/tags/rc-')
     runs-on: ubuntu-latest
     steps:
@@ -39,11 +39,6 @@ jobs:
       - name: Build app
         run: npm run build
 
-      - name: Create docker-image
-        env:
-          TAG_NAME: ${{github.ref_name}},
-        run: node .github/scripts/docker-image.js
-
       - name: Update ticket with last release
         env:
           TAG_NAME: ${{github.ref_name}},
@@ -52,6 +47,11 @@ jobs:
           ISSUE_ID: ${{secrets.ISSUE_ID}},
           ACTOR: ${{github.actor}}
         run: node .github/scripts/tracker-ticket.js
+
+      - name: Create docker-image
+        env:
+          TAG_NAME: ${{github.ref_name}},
+        run: node .github/scripts/docker-image.js
 
       - name: Update ticket comment with docker image
         env:

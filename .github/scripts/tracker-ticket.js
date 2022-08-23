@@ -29,15 +29,17 @@ const message = async () => {
     JSON.stringify(body)
   );
 
-    const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
-      method: "PATCH",
-      headers,
-      body: JSON.stringify(body),
-    });
+  const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+  });
 
-    if (!responce.ok)
-      throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
-
+  if (!responce.ok) {
+    const data = await responce.json();
+    console.error(data);
+    throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
+  }
   console.log(`Тикет успешно обновлен.`);
 };
 
