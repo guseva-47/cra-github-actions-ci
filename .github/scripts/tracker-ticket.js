@@ -30,16 +30,22 @@ const message = async () => {
   );
 
   const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
-    method: "PATCH",
+    method: "GET",
     headers,
-    body: JSON.stringify(body),
   });
 
+  //   const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
+  //     method: "PATCH",
+  //     headers,
+  //     body: JSON.stringify(body),
+  //   });
+
   if (!responce.ok) {
-    const data = await responce.json();
-    console.error(data);
     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
   }
+
+  const data = await responce.body();
+  console.error(data);
   console.log(`Тикет успешно обновлен.`);
 };
 
