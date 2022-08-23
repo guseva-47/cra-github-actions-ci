@@ -29,15 +29,13 @@ const message = async () => {
     JSON.stringify(body)
   );
 
-  const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
+  const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}`, {
     method: "PATCH",
     headers,
     body: JSON.stringify(body),
   });
 
   if (!responce.ok) {
-    const data = await responce.text();
-    console.error(data);
     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
   }
 
