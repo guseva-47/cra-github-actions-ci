@@ -11,6 +11,7 @@ const message = async () => {
   const headers = {
     Authorization: `OAuth ${OAUTH}`,
     "X-Org-ID": `${ORG_ID}`,
+    "Content-Type": "application/json"
   };
 
   const date = new Date().toLocaleDateString();
@@ -35,6 +36,8 @@ const message = async () => {
   });
 
   if (!responce.ok) {
+    const data = responce.text();
+    console.error(data);
     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
   }
 
