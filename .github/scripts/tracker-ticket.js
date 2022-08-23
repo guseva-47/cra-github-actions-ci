@@ -29,6 +29,8 @@ const message = async () => {
     JSON.stringify(body)
   );
 
+  console.log(JSON.stringify(headers));
+  console.log(`${host}/v2/issues/${ISSUE_ID}/comments`);
   const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
     method: "GET",
     headers,
@@ -41,11 +43,11 @@ const message = async () => {
   //   });
 
   if (!responce.ok) {
+    const data = await responce.text();
+    console.error(data);
     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
   }
 
-  const data = await responce.body();
-  console.error(data);
   console.log(`Тикет успешно обновлен.`);
 };
 
