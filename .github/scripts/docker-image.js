@@ -2,7 +2,7 @@ import { exec as _exec } from "@actions/exec";
 
 const { TAG_NAME } = process.env;
 
-const dockerTag = `app:${TAG_NAME}`.replace(',', '');
+const dockerTag = `app:${TAG_NAME}`;
 
 const dockerBuild = async () => {
   console.log(`Начата сборка докер образа с тегом ${dockerTag}`);

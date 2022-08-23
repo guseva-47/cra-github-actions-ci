@@ -41,22 +41,22 @@ jobs:
 
       - name: Update ticket with last release
         env:
-          TAG_NAME: ${{github.ref_name}},
-          OAUTH: ${{secrets.OAUTH}},
-          ORG_ID: ${{secrets.ORG_ID}},
-          ISSUE_ID: ${{secrets.ISSUE_ID}},
+          TAG_NAME: ${{github.ref_name}}
+          OAUTH: ${{secrets.OAUTH}}
+          ORG_ID: ${{secrets.ORG_ID}}
+          ISSUE_ID: ${{secrets.ISSUE_ID}}
           ACTOR: ${{github.actor}}
         run: node .github/scripts/tracker-ticket.js
 
       - name: Create docker-image
         env:
-          TAG_NAME: ${{github.ref_name}},
+          TAG_NAME: ${{github.ref_name}}
         run: node .github/scripts/docker-image.js
 
       - name: Update ticket comment with docker image
         env:
-          TAG_NAME: ${{github.ref_name}},
-          OAUTH: ${{secrets.OAUTH}},
-          ORG_ID: ${{secrets.ORG_ID}},
+          TAG_NAME: ${{github.ref_name}}
+          OAUTH: ${{secrets.OAUTH}}
+          ORG_ID: ${{secrets.ORG_ID}}
           ISSUE_ID: ${{secrets.ISSUE_ID}}
         run: node .github/scripts/docker-comment.js
