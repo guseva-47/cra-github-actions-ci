@@ -6,7 +6,7 @@ const { TAG_NAME, ACTOR, OAUTH, ORG_ID, ISSUE_ID } = process.env;
 
 const message = async () => {
   const commits = await collectTagCommits();
-  console.log('Число коммитов', commits.length);
+  console.log("Число коммитов", commits.length);
 
   const host = "https://api.tracker.yandex.net";
   const headers = {
@@ -29,14 +29,14 @@ const message = async () => {
     JSON.stringify(body)
   );
 
-//   const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
-//     method: "PATCH",
-//     headers,
-//     body: JSON.stringify(body),
-//   });
+  //   const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
+  //     method: "PATCH",
+  //     headers,
+  //     body: JSON.stringify(body),
+  //   });
 
-//   if (!responce.ok)
-//     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
+  //   if (!responce.ok)
+  //     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
 
   console.log(`Тикет успешно обновлен.`);
 };
@@ -60,7 +60,10 @@ const collectTagCommits = async () => {
   console.log(`Sha текущего коммита `, sha.slice(0, 8));
 
   // поиск предыдущего тега
-  await _exec("git describe", ["--tags", "--abbrev=0", sha + "^"], options);
+  await _exec("git describe", ["--tags", "--abbrev=0", sha + "^"], {
+    ...options,
+    ignoreReturnCode: true,
+  });
 
   const isFirstTag = stderr.startsWith("fatal:");
 
