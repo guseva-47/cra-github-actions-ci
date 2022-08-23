@@ -36,7 +36,7 @@ const message = async () => {
   });
 
   if (!responce.ok) {
-    const data = responce.text();
+    const data = await responce.text();
     console.error(data);
     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
   }
