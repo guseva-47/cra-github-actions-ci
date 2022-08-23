@@ -6,7 +6,6 @@ const { TAG_NAME, ACTOR, OAUTH, ORG_ID, ISSUE_ID } = process.env;
 
 const message = async () => {
   const commits = await collectTagCommits();
-  console.log("Число коммитов", commits.length);
 
   const host = "https://api.tracker.yandex.net";
   const headers = {
@@ -29,22 +28,13 @@ const message = async () => {
     JSON.stringify(body)
   );
 
-  console.log(JSON.stringify(headers));
-  console.log(`${host}/v2/issues/${ISSUE_ID}/comments`);
   const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
-    method: "GET",
+    method: "PATCH",
     headers,
+    body: JSON.stringify(body),
   });
 
-  //   const responce = await fetch(`${host}/v2/issues/${ISSUE_ID}/comments`, {
-  //     method: "PATCH",
-  //     headers,
-  //     body: JSON.stringify(body),
-  //   });
-
   if (!responce.ok) {
-    const data = await responce.text();
-    console.error(data);
     throw Error(`Запрос отклонен со статусом ${responce.statusText}`);
   }
 

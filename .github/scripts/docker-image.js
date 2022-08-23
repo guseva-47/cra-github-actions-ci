@@ -7,7 +7,6 @@ const dockerTag = `app:${TAG_NAME}`;
 const dockerBuild = async () => {
   console.log(`Начата сборка докер образа с тегом ${dockerTag}`);
   try {
-    // await _exec("docker", ["build", "--file", "Dockerfile.prod", '-t', dockerTag, "."]);
     await _exec(`docker build -f Dockerfile.prod -t ${dockerTag} .`)
   } catch (err) {
     console.error("Сборка докер образа завершена с ошибкой", err.message);
